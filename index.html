@@ -22,6 +22,12 @@
   </head>
   <body>
     <h2 id="header">typings</h2>
+    <div>
+      <select id="tts-api" onchange="changeSpeechApi(this)">
+        <option value="webspeech">Web Speech API (native)</option>
+        <option value="responsivevoice">ResponsiveVoice</option>
+      </select>
+    </div>
     <div id="command-center" class="">
       <div class="bar">
         <div id="left-wing">

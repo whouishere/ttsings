@@ -1,6 +1,7 @@
 // Get document element
 const textDisplay = document.querySelector('#text-display');
 const inputField = document.querySelector('#input-field');
+const synth = window.speechSynthesis;
 
 // Initialize typing mode variables
 let typingMode = 'wordcount';
@@ -16,6 +17,7 @@ let startDate = 0;
 let timer;
 let timerActive = false;
 let punctuation = false;
+let speechApi = document.querySelector('#tts-api').selectedOptions[0].value;
 
 // Get cookies
 getCookie('theme') === '' ? setTheme('light') : setTheme(getCookie('theme'));
@@ -106,6 +108,24 @@ function addPunctuations() {
   }
 }
 
+function changeSpeechApi(option) {
+  speechApi = option.value;
+}
+
+function speak(text) {
+  if (speechApi === 'webspeech') {
+    const utterThis = new SpeechSynthesisUtterance(text);
+    utterThis.lang = 'en-US';
+    utterThis.pitch = 1;
+    utterThis.rate = 1;
+    synth.speak(utterThis);
+  }
+
+  if (speechApi === 'responsivevoice') {
+    responsiveVoice.speak(text);
+  }
+}
+
 // Display text to textDisplay
 function showText() {
   wordList.forEach(word => {
@@ -188,7 +208,7 @@ inputField.addEventListener('keydown', e => {
         if (inputField.value === wordList[currentWord]) {
           textDisplay.childNodes[currentWord].classList.add('correct');
           correctKeys += wordList[currentWord].length + 1;
-          responsiveVoice.speak(inputField.value);
+          speak(inputField.value);
         } else {
           textDisplay.childNodes[currentWord].classList.add('wrong');
         }
@@ -207,7 +227,7 @@ inputField.addEventListener('keydown', e => {
     if (inputField.value + e.key === wordList[currentWord]) {
       textDisplay.childNodes[currentWord].classList.add('correct');
       correctKeys += wordList[currentWord].length;
-      responsiveVoice.speak(inputField.value);
+      speak(inputField.value);
       currentWord++;
       showResult();
     }
