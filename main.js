@@ -188,6 +188,7 @@ inputField.addEventListener('keydown', e => {
         if (inputField.value === wordList[currentWord]) {
           textDisplay.childNodes[currentWord].classList.add('correct');
           correctKeys += wordList[currentWord].length + 1;
+          responsiveVoice.speak(inputField.value);
         } else {
           textDisplay.childNodes[currentWord].classList.add('wrong');
         }
@@ -206,6 +207,7 @@ inputField.addEventListener('keydown', e => {
     if (inputField.value + e.key === wordList[currentWord]) {
       textDisplay.childNodes[currentWord].classList.add('correct');
       correctKeys += wordList[currentWord].length;
+      responsiveVoice.speak(inputField.value);
       currentWord++;
       showResult();
     }
